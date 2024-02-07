@@ -144,12 +144,18 @@ export default {
         };
         const response = await axiosInstance.post('/verify/otp', requestData);
         this.$router.push({ name: 'profile' }); 
-        // Do something with the response data if needed
+        console.log('Response Data:', response);
       } catch (error) {
         this.buttonStatus = false
-        this.errorStatus = true
-        this.errorMessage = 'OTP Mixmatch'
         this.error = error.response.data.error.message
+        this.errorMessage = error.response.data.error.custom_message
+
+        if (this.errorMessage == undefined) {
+          this.errorMessage = null
+        } else {
+          this.error = {}
+          this.errorMessage = error.response.data.error.custom_message
+        }
       }
     },
 
@@ -177,11 +183,18 @@ export default {
 
         const response = await axiosInstance.post('/resend/otp', requestData);
         this.successMessage = 'OTP sent succesfully. Please check your mail'
-        console.log('Response Data:', response.data);
+        console.log('Response Data:', response);
       } catch (error) {
-        this.buttonStatus == false
-        this.errorMessage = 'Failed To Send Code Try Again'
+        this.buttonStatus = false
         this.error = error.response.data.error.message
+        this.errorMessage = error.response.data.error.custom_message
+
+        if (this.errorMessage == undefined) {
+          this.errorMessage = null
+        } else {
+          this.error = {}
+          this.errorMessage = error.response.data.error.custom_message
+        }
       }
     },
 
