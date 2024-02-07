@@ -7,14 +7,14 @@
 <nav class="navbar landing-page">
 <div class="container-fluid mt-md-5">
 
-  <a class="navbar-brand" href="#">
+  <router-link :to="{ name: 'register' }" class="navbar-brand">
     <img src="@/assets/Images/Website-Icon-WhiteBg@1x.svg" alt="Logo" width="50" height="50">
-  </a>
+  </router-link>
 
     <button 
     class="btn bg-btn-custom text-white fw-bold p-3" 
     type="submit"
-    style="font-size: 13px;">  
+    style="font-size: 13px;" @click="getStarted">  
       TRACK MY EXPENSE 
     <i class="bi bi-arrow-right"></i> 
     </button>
@@ -63,7 +63,7 @@
 
 
  <div class="d-grid gap-2 col-4 mx-auto ">
-  <button class="btn text-white rounded-pill bg-btn-custom  fw-bold p-2" type="button">
+  <button class="btn text-white rounded-pill bg-btn-custom  fw-bold p-2" type="button" @click="getStarted">
     Become Financialy Aware
 </button>
 </div>
@@ -302,7 +302,7 @@
 
 
  <div class="d-grid gap-2 col-4 mx-auto ">
-  <button class="btn rounded-pill fw-bold p-2" type="button" style="background-color: white; color: #4FC3A6;">
+  <button class="btn rounded-pill fw-bold p-2" type="button" style="background-color: white; color: #4FC3A6;" @click="getStarted">
     Become Financialy Aware
 </button>
 </div>
@@ -356,6 +356,37 @@
 
 
 </template>
+
+
+
+
+<script>
+
+export default {
+  data() {
+    return {
+      // Data
+    }
+  },
+
+  methods: {
+
+    getStarted() {
+      this.$router.push({ name: 'register' })
+    }
+
+
+  }
+
+
+
+}
+
+</script>
+
+
+
+
 
 <style scoped>
 

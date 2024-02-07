@@ -13,7 +13,7 @@
 
 
       <h3 class="text-center text-color-custom"> Set New Password </h3>
-      <p class="text-center text-color-custom mt-3"> Password already reset? <span style="color: #37BB9A;"> Sign in</span> </p>
+      <p class="text-center text-color-custom mt-3"> Password already reset? <router-link :to="{ name: 'register' }" class="link-offset-2 link-underline link-underline-opacity-0" style="color: #37BB9A;"> Sign in </router-link> </p>
 
 
 <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errorMessage !== null">

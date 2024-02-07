@@ -29,9 +29,12 @@
   <div class="invalid-feedback">
     {{  error.password == null ? '' : error.password[0] }}
   </div>
+  <router-link :to="{ name: 'sendVerification' }" class="link-offset-2 link-underline link-underline-opacity-0 text-end" style="color: #37BB9A; float: right;"> Forget Password? </router-link>
 </div>
+
+<br>
     
-    <div class="d-grid gap-2">
+    <div class="d-grid gap-2 ">
       <button class="btn fw-bold text-white" type="button" style="background-color: #37BB9A;" @click="submit"> Login </button>
     </div>
     
