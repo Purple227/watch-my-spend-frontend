@@ -15,48 +15,48 @@
     </a> 
 
 
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+<div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errorMessage !== null">
+  <strong> {{ errorMessage  }}</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+<div class="alert alert-success alert-dismissible fade show" role="alert" v-if="successMessage !== null">
+  <strong> {{  successMessage  }} </strong> 
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 
     <h3 class="text-center text-color-custom"> Verify Your Email </h3>
     <p class="text-center text-color-custom mt-2"> Entert the verification code sent </p>
-    <p class="text-center text-color-custom mt-2 mb-3 fw-bold"> p*************@gmail.com </p>
+    <p class="text-center text-color-custom mt-2 mb-3 fw-bold"> {{  maskedEmail }} </p>
 
 
   <div class="row g-6 ml-sm-2">
 
   <div class="col-2">
-    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-success'" ref="input1" @input="handleInput(1)"  maxlength="1" required>
+    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input1" @input="handleInput(1)"  maxlength="1" v-model="form.otpOne">
   </div>
 
   <div class="col-2">
-    <input type="text" class="form-control form-control-lg" ref="input2" @input="handleInput(2)"  maxlength="1"  required>
-  </div>
-
-
-  <div class="col-2">
-    <input type="text" class="form-control form-control-lg" ref="input3" @input="handleInput(3)" maxlength="1" required>
+    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input2" @input="handleInput(2)"  maxlength="1" v-model="form.otpTwo">
   </div>
 
 
   <div class="col-2">
-    <input type="text" class="form-control form-control-lg " ref="input4" @input="handleInput(4)" maxlength="1" required>
+    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input3" @input="handleInput(3)" maxlength="1" v-model="form.otpThree">
+  </div>
+
+
+  <div class="col-2">
+    <input type="text" class="form-control form-control-lg " :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input4" @input="handleInput(4)" maxlength="1" v-model="form.otpFour">
   </div>
 
   <div class="col-2">
-    <input type="text" class="form-control form-control-lg" ref="input5" @input="handleInput(5)" maxlength="1" required>
+    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input5" @input="handleInput(5)" maxlength="1" v-model="form.otpFive">
   </div>
 
   <div class="col-2">
-    <input type="text" class="form-control form-control-lg" ref="input6" @input="handleInput(6)" maxlength="1" required>
+    <input type="text" class="form-control form-control-lg" :class="errorStatus == true ? 'border border-danger' : 'border border-light'" ref="input6" @input="handleInput(6)" maxlength="1" v-model="form.otpSix">
   </div>
 
 </div>
@@ -73,7 +73,7 @@
 
       <div class="col-md-6">
           <div class="d-grid gap-2">
-             <button class="btn bg-sign-up-2 fw-bold text-white m-2" type="button"> Verify Email </button>
+             <button class="btn bg-sign-up-2 fw-bold text-white m-2" type="button" @click="submitCode"> Verify Email </button>
           </div>
       </div>
 
@@ -117,19 +117,21 @@ export default {
       },
 
       error: {},
-      userData: null,
+      userData: {},
 
       buttonStatus: false,
       email: null,
       countdown: 20,
       timerInterval: null,
       errorStatus: false,
+      errorMessage: null,
+      successMessage: null,
       
     }
   },
 
   mounted() {
-   this.getAuthUser()
+   this.getAuthUser();
   },
 
   methods: {
@@ -138,16 +140,15 @@ export default {
       this.buttonStatus == true
       try {
         const requestData = {
-          otp: this.form.otpOne+this.form.otpTwo+this.form.otpThree.this.form.otpFour+this.form.otpFive+this.form.otpSix,
+          otp: this.form.otpOne + this.form.otpTwo + this.form.otpThree + this.form.otpFour + this.form.otpFive + this.form.otpSix,
         };
-
         const response = await axiosInstance.post('/verify/otp', requestData);
-        this.$router.push({ name: 'login' });
+        this.$router.push({ name: 'profile' }); 
         // Do something with the response data if needed
-        console.log('Response Data:', response.data);
       } catch (error) {
         this.buttonStatus = false
         this.errorStatus = true
+        this.errorMessage = 'OTP Mixmatch'
         this.error = error.response.data.error.message
       }
     },
@@ -171,15 +172,15 @@ export default {
       this.startTimer()
       try {
         const requestData = {
-          email: this.email,
+          email: this.userData.email,
         };
 
         const response = await axiosInstance.post('/resend/otp', requestData);
-        //this.$router.push({ name: 'login' });
-        // Do something with the response data if needed
+        this.successMessage = 'OTP sent succesfully. Please check your mail'
         console.log('Response Data:', response.data);
       } catch (error) {
         this.buttonStatus == false
+        this.errorMessage = 'Failed To Send Code Try Again'
         this.error = error.response.data.error.message
       }
     },
@@ -196,6 +197,7 @@ export default {
           }
         }, 1000);
       }
+      this.countdown = 20
     },
   
     async getAuthUser() {
@@ -206,10 +208,25 @@ export default {
       this.$router.push({ name: 'login' });
     }
 
-    }
+    },
+
+  },
 
 
-  }
+  computed: {
+
+    maskedEmail() {
+      if (!this.userData.email) return '';
+
+      const atIndex = this.userData.email.indexOf('@');
+      const maskedPart = this.userData.email.slice(1, atIndex).replace(/./g, '*');
+      const remainingPart = this.userData.email.slice(atIndex);
+      
+      return this.userData.email.charAt(0) + maskedPart + remainingPart;
+    },
+
+
+  },
 
 
 
