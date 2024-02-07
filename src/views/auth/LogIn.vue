@@ -9,28 +9,30 @@
        <a class="navbar-brand d-block" href="#">
         <img src="@/assets/Images/logo-full-dark-bg.svg" class="mx-auto d-block" alt="Logo" width="150" height="100">
       </a> 
+
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errorMessage !== null">
+  <strong> {{  errorMessage }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
     
     
-    <div class="has-validation">
-      <input type="email" class="form-control is-invalid" id="exampleFormControlInput1" placeholder="Email Address">
+<div class="mt-4" :class="error.email == null ? '' : 'has-validation'">
+  <input type="email" class="form-control" :class="error.email == null ? 'border border-light' : 'is-invalid'" placeholder="Email Address" v-model="form.email">
+  <div class="invalid-feedback">
+    {{  error.email == null ? '' : error.email[0] }}
+  </div>
+</div>
     
-      <div id="validationServerUsernameFeedback" class="invalid-feedback">
-            Your email address is already taken
-      </div>
-    
-    </div>
-    
-    <div class="has-validation mt-4 mb-3">
-      <input type="password" class="form-control is-invalid" id="exampleFormControlInput1" placeholder="Password">
-    
-      <div id="validationServerUsernameFeedback" class="invalid-feedback">
-            Password invalid 8 character is needed
-      </div>
-    
-    </div>
+<div class="mt-4 mb-4" :class="error.password == null ? '' : 'has-validation'">
+  <input type="password" class="form-control" :class="error.password == null ? 'border border-light' : 'is-invalid'" placeholder="Password" v-model="form.password">
+  <div class="invalid-feedback">
+    {{  error.password == null ? '' : error.password[0] }}
+  </div>
+</div>
     
     <div class="d-grid gap-2">
-      <button class="btn fw-bold text-white" type="button" style="background-color: #37BB9A;"> Create Account </button>
+      <button class="btn fw-bold text-white" type="button" style="background-color: #37BB9A;" @click="submit"> Login </button>
     </div>
     
     <p class="text-center text-color-custom mt-3"> Already have an account? <router-link :to="{ name: 'register' }" class="link-offset-2 link-underline link-underline-opacity-0" style="color: #37BB9A;"> Sign Up </router-link> </p>
@@ -45,6 +47,83 @@
     </div>
     
     </template>
+
+
+
+
+
+<script>
+import axiosInstance from '@/axiosInstance';
+
+export default {
+  data() {
+    return {
+
+      form : {
+        email: null,
+        password: null,
+      },
+
+      error: {},
+
+      buttonStatus: false,
+      errorMessage: null
+
+      
+    }
+  },
+
+
+  methods: {
+
+    async submit() {
+      this.buttonStatus == true
+
+      try {
+        const requestData = {
+          email: this.form.email,
+          password: this.form.password,
+        };
+        const response = await axiosInstance.post('/login', requestData);
+        localStorage.setItem('bearerToken', response.data.data.token);
+
+        if(response.data.data.user.email_verified_at == null ) {
+          this.$router.push({ name: 'verifyEmail' })
+        } else if(response.data.data.user.onboard != 3) {
+          this.$router.push({ name: 'profile' })
+        }else {
+          this.$router.push({ name: 'dashboard' })
+        }
+      } catch (error) {
+        this.buttonStatus = false
+
+
+        this.error = error.response.data.error.message
+        this.errorMessage = error.response.data.error.custom_message
+
+        if (this.errorMessage == undefined) {
+          this.errorMessage = null
+        } else {
+          this.error = {}
+          this.errorMessage = error.response.data.error.custom_message
+        }
+
+      }
+    },
+
+
+  }
+
+
+
+}
+
+</script>
+
+
+
+
+
     
     <style scoped>
     
@@ -62,5 +141,23 @@
     .text-color-custom {
        color: #CBCACA;
     }
+
+
+input, input:focus {
+  /* Set the background color to your desired color */
+  background-color: #2A303C; /* Replace with your preferred color code or name */
+  color: #CBCACA;
+  border: 1px solid #CBCACA;
+}
+
+input::placeholder {
+  /* Set the color for the placeholder text */
+  color: #CBCACA; /* Replace with your preferred color code or name */
+}
+
+input:focus::placeholder {
+  /* Set the color for the placeholder text when focused */
+  color: #CBCACA; /* Replace with your preferred color code or name */
+}
     
     </style>

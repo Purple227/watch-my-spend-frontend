@@ -105,12 +105,9 @@ export default {
           password_confirmation: this.form.passwordConfirmation,
           term_condition: this.form.isChecked
         };
-
         const response = await axiosInstance.post('/register', requestData);
         localStorage.setItem('bearerToken', response.data.data.token);
         this.$router.push({ name: 'verifyEmail' });
-        // Do something with the response data if needed
-        console.log('Response Data:', response.data.data.token);
       } catch (error) {
         this.buttonStatus = false
         this.error = error.response.data.error.message

@@ -34,7 +34,12 @@ const routes = [
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('./views/onboard/ProFile.vue'),
+      component: () => import('./views/onboard/LandingPage.vue'),
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('./views/dashboard/LandingPage.vue'),
     },
   ];
 

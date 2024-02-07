@@ -15,7 +15,7 @@
     </a> 
 
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>Holy guacamole!</strong> You should check in on some of those fields below.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -101,6 +101,7 @@
 
 <script>
 import axiosInstance from '@/axiosInstance';
+import { useAuthUser } from '@/store/authenticate';
 
 export default {
   data() {
@@ -116,6 +117,7 @@ export default {
       },
 
       error: {},
+      userData: null,
 
       buttonStatus: false,
       email: null,
@@ -126,6 +128,9 @@ export default {
     }
   },
 
+  mounted() {
+   this.getAuthUser()
+  },
 
   methods: {
 
@@ -191,7 +196,18 @@ export default {
           }
         }, 1000);
       }
+    },
+  
+    async getAuthUser() {
+    await useAuthUser().fetchUserData();
+    this.userData = useAuthUser().userData
+
+    if ( this.userData == null ) {
+      this.$router.push({ name: 'login' });
     }
+
+    }
+
 
   }
 
