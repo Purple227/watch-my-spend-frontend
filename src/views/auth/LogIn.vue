@@ -4,7 +4,7 @@
     <div class="container-fluid bg-sign-up">
       <div class="row">
     
-        <div class="col-md-6 p-md-5">
+        <div class="col-md-6 p-md-5 text">
     
        <a class="navbar-brand d-block" href="#">
         <img src="@/assets/Images/logo-full-dark-bg.svg" class="mx-auto d-block" alt="Logo" width="150" height="100">
@@ -42,7 +42,7 @@
     
         </div>
     
-        <div class="col-md-6 bg-image" style="background-color: #23AA88">
+        <div class="col-md-6 bg-image d-none d-md-block" style="background-color: #23AA88">
             <!-- BG image goes here-->
         </div>
     
@@ -92,7 +92,7 @@ export default {
 
         if(response.data.data.user.email_verified_at == null ) {
           this.$router.push({ name: 'verifyEmail' })
-        } else if(response.data.data.user.onboard != 3) {
+        } else if(response.data.data.user.on_board !== 3) {
           this.$router.push({ name: 'profile' })
         }else {
           this.$router.push({ name: 'dashboard' })
@@ -139,6 +139,7 @@ export default {
     
     .bg-sign-up {
         background-color: #2A303C;
+        height: 100vh; /* This ensures that the background covers the entire viewport height */
     }
 
     .text-color-custom {

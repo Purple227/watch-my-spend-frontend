@@ -53,7 +53,7 @@
 
     </div>
 
-    <div class="col-md-6 bg-image" style="background-color: #23AA88">
+    <div class="col-md-6 bg-image d-none d-md-block" style="background-color: #23AA88">
         <!-- BG image goes here-->
     </div>
 
@@ -134,6 +134,7 @@ export default {
 
 .bg-sign-up {
     background-color: #2A303C;
+    height: 100vh;
 }
 
 .text-color-custom {

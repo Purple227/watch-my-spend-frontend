@@ -67,7 +67,7 @@
 
       <div class="col-md-6">
           <div class="d-grid gap-2">
-             <button class="btn fw-bold bg-sign-up border border-success m-2" type="button" style="color: #23AA88;" @click="goBack"> Go Back</button>
+             <button class="btn fw-bold border border-success m-2" type="button" style="color: #23AA88;" @click="goBack"> Go Back</button>
           </div>
       </div>
 
@@ -86,7 +86,7 @@
       
       </div>
   
-      <div class="col-md-6 bg-image" style="background-color: #23AA88">
+      <div class="col-md-6 bg-image d-none d-md-block" style="background-color: #23AA88">
           <!-- BG image goes here-->
       </div>
   
@@ -262,6 +262,7 @@ export default {
   
   .bg-sign-up {
       background-color: #2A303C;
+      height: 100vh; /* This ensures that the background covers the entire viewport height */
   }
 
   .bg-sign-up-2 {

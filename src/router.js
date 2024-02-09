@@ -32,9 +32,19 @@ const routes = [
       component: () => import('./views/auth/VerifyEmail.vue'),
     },
     {
-      path: '/profile',
+      path: '/profile/setup',
       name: 'profile',
-      component: () => import('./views/onboard/LandingPage.vue'),
+      component: () => import('./views/onboard/ProFile.vue'),
+    },
+    {
+      path: '/expense/account/setup',
+      name: 'account',
+      component: () => import('./views/onboard/ExpenseAccount.vue'),
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: () => import('./views/onboard/CaTegory.vue'),
     },
     {
       path: '/dashboard',
