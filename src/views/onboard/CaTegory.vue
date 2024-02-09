@@ -10,25 +10,18 @@
         <img src="@/assets/Images/logo-full-dark-bg.svg" class="" alt="Logo" width="150" height="100">
       </a> 
 
-      <h4 class="text-color-custom"> Category </h4>
+      <h4 class="text-color-custom"> Spend Category </h4>
       <p class="text-color-custom fw-light"> 
-        Add the name & current balances of all your accounts from which spends are done.
+        Add the name of the category under which you make your spend.
     </p>
 
 
-<div class="row">
-
-  <div class="col-md-6">
     <div :class="error.name == null ? '' : 'has-validation'">
-    <input type="text" class="form-control" :class="error.name == null ? 'border border-light' : 'is-invalid'"  placeholder="Name" v-model="form.name">
-  </div>
-  </div>
-
-  <div class="col-md-6">
-    <div :class="error.currency_balance == null ? '' : 'has-validation'">
-    <input type="text" class="form-control" :class="error.currency_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Current Balance" v-model="form.currentBalance">
-  </div>
-  </div>
+      <input type="text" class="form-control" :class="error.name == null ? 'border border-light' : 'is-invalid'" placeholder="Name" v-model="form.name">
+      <div class="invalid-feedback">
+            {{  error.name  == null ? '' : error.name[0] }}
+      </div>
+    </div>
 
 
   <div class="row mt-5">
@@ -43,8 +36,6 @@
     <div class="d-grid">
        <button class="btn bg-custom-green fw-bold text-white" type="button" @click="submit"> Continue </button>
     </div>
-</div>
-
 </div>
 
 </div>
@@ -77,7 +68,6 @@
     
           form : {
             name: null,
-            currentBalance: null,
           },
     
           error: {},
@@ -96,11 +86,10 @@
 
       try {
         const requestData = {
-          bank_name: this.form.name,
-          opening_balance: this.form.currentBalance,
+          name: this.form.name,
         };
-        const response = await axiosInstance.post('/account/create', requestData);
-        this.$router.push({ name: 'category' });
+        const response = await axiosInstance.post('/category/create', requestData);
+        this.$router.push({ name: 'onboardComplete' });
         console.log(response)
       } catch (error) {
         this.buttonStatus = false

@@ -42,9 +42,14 @@ const routes = [
       component: () => import('./views/onboard/ExpenseAccount.vue'),
     },
     {
-      path: '/category',
+      path: '/onboard/category',
       name: 'category',
       component: () => import('./views/onboard/CaTegory.vue'),
+    },
+    {
+      path: '/onboard/complete',
+      name: 'onboardComplete',
+      component: () => import('./views/onboard/OnboardComplete.vue'),
     },
     {
       path: '/dashboard',

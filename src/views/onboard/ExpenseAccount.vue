@@ -20,15 +20,24 @@
 
   <div class="col-md-6">
     <div :class="error.bank_name == null ? '' : 'has-validation'">
-    <input type="text" class="form-control" :class="error.name == null ? 'border border-light' : 'is-invalid'"  placeholder="Name" v-model="form.name">
+    <input type="text" class="form-control" :class="error.opening_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Name" v-model="form.name">
+    <div class="invalid-feedback">
+    {{  error.bank_name == null ? '' : error.bank_name[0] }}
+  </div>
   </div>
   </div>
 
   <div class="col-md-6">
-    <div :class="error.currency_balance == null ? '' : 'has-validation'">
-    <input type="text" class="form-control" :class="error.currency_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Current Balance" v-model="form.currentBalance">
+    <div :class="error.opening_balance_balance == null ? '' : 'has-validation'">
+    <input type="text" class="form-control" :class="error.opening_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Current Balance" v-model="form.currentBalance">
+    <div class="invalid-feedback">
+    {{  error.opening_balance == null ? '' : error.opening_balance[0] }}
   </div>
   </div>
+  </div>
+
+</div>
+
 
 
   <div class="row mt-5">
@@ -45,7 +54,6 @@
     </div>
 </div>
 
-</div>
 
 </div>
 
