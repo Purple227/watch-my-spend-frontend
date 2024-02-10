@@ -66,11 +66,6 @@ export default {
     async getAuthUser() {
     await useAuthUser().fetchUserData();
     this.userData = useAuthUser().userData
-
-    if ( this.userData == null ) {
-      this.$router.push({ name: 'login' });
-    }
-
   },
 
 }

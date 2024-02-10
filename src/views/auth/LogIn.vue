@@ -10,12 +10,10 @@
         <img src="@/assets/Images/logo-full-dark-bg.svg" class="mx-auto d-block" alt="Logo" width="150" height="100">
       </a> 
 
-
 <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errorMessage !== null">
   <strong> {{  errorMessage }}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="closeErrorPop"></button>
 </div>
-    
     
 <div class="mt-4" :class="error.email == null ? '' : 'has-validation'">
   <input type="email" class="form-control" :class="error.email == null ? 'border border-light' : 'is-invalid'" placeholder="Email Address" v-model="form.email">
@@ -112,8 +110,8 @@ export default {
         }
 
       }
-    },
 
+    },
 
   }
 
