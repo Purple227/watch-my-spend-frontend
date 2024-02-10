@@ -29,12 +29,15 @@
 
   <div class="col-md-6">
     <div :class="error.opening_balance_balance == null ? '' : 'has-validation'">
-    <input type="text" class="form-control" :class="error.opening_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Current Balance" v-model="form.currentBalance">
+    <input type="number" class="form-control" :class="error.opening_balance == null ? 'border border-light' : 'is-invalid'"  placeholder="Current Balance" v-model="form.currentBalance">
     <div class="invalid-feedback">
     {{  error.opening_balance == null ? '' : error.opening_balance[0] }}
   </div>
   </div>
   </div>
+
+  <p class="small m-1 fw-bold" style="color: #35A88D;">  <i class="bi bi-plus"></i> Add More </p>
+
 
 </div>
 

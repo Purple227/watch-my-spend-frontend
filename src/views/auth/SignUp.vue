@@ -33,9 +33,27 @@
 </div>
 
 
-<div class="d-grid gap-2 ">
-  <button class="btn fw-bold text-white" type="button" style="background-color: #37BB9A;" @click="submit" :disabled="buttonStatus"> Create Account </button>
+<div class="d-grid gap-2">
+
+  <button 
+  class="btn fw-bold text-white" 
+  type="button" 
+  style="background-color: #37BB9A;" 
+  @click="submit" v-if="buttonStatus == true"> 
+  Create Account 
+  </button>
+
+  <button 
+  class="btn fw-bold text-white" 
+  type="button" 
+  style="background-color: #37BB9A;" v-else> 
+  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+  Create Account 
+  </button>
+
 </div>
+
+
 
 <div class="form-check mb-3 mt-3">
   <input class="form-check-input border border-1" type="checkbox" v-model="form.isChecked" style="background-color: #2A303C;">
@@ -81,7 +99,7 @@ export default {
 
       error: {},
 
-      buttonStatus: false,
+      buttonStatus: true,
       checkStatus: '',
 
       
@@ -92,9 +110,10 @@ export default {
   methods: {
 
     async submit() {
-      this.buttonStatus == true
+      this.buttonStatus = false
 
       if (this.form.isChecked == false) {
+      this.buttonStatus = true
       return this.checkStatus = 'Please Accept Our terms and Condition'
       }
 
@@ -109,14 +128,12 @@ export default {
         localStorage.setItem('bearerToken', response.data.data.token);
         this.$router.push({ name: 'verifyEmail' });
       } catch (error) {
-        this.buttonStatus = false
+        this.buttonStatus = true
         this.error = error.response.data.error.message
       }
     },
 
-
   }
-
 
 
 }

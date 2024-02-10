@@ -156,6 +156,16 @@ export default {
           this.error = {}
           this.errorMessage = error.response.data.error.custom_message
         }
+
+        this.form = {
+        otpOne: null,
+        otpTwo: null,
+        otpThree: null,
+        otpFour: null,
+        otpFive: null,
+        otpSix: null,
+      }
+
       }
     },
 
@@ -216,10 +226,6 @@ export default {
     async getAuthUser() {
     await useAuthUser().fetchUserData();
     this.userData = useAuthUser().userData
-
-    if ( this.userData == null ) {
-      this.$router.push({ name: 'login' });
-    }
 
     },
 

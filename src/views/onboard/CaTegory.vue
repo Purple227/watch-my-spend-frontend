@@ -23,6 +23,8 @@
       </div>
     </div>
 
+    <p class="small m-1 fw-bold" style="color: #35A88D;">  <i class="bi bi-plus"></i> Add More </p>
+
 
   <div class="row mt-5">
 
